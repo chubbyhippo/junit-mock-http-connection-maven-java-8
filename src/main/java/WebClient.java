@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -6,8 +7,7 @@ public class WebClient {
 	public String getContent(URL url) {
 		StringBuffer content = new StringBuffer();
 		try {
-			HttpURLConnection connection = (HttpURLConnection) url
-					.openConnection();
+			HttpURLConnection connection = createHttpURLConnection(url);
 			connection.setDoInput(true);
 			InputStream is = connection.getInputStream();
 			int count;
@@ -19,6 +19,12 @@ public class WebClient {
 			return null;
 		}
 		return content.toString();
+
+	}
+
+	protected HttpURLConnection createHttpURLConnection(URL url)
+			throws IOException {
+		return (HttpURLConnection) url.openConnection();
 
 	}
 
